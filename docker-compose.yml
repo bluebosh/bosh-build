@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  db:
+    image: fissile-postgres-9.4:401ac79db59c87be4d51472bea3888e92acd8c8d
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    env_file:
+      - ./monit.env
+    ports: ["5432:5432"]
+
+  director:
+    image: fissile-director:9c27423ae0758a28aaea7e089cb87add2e08f169
+    volumes:
+       - /Users/jianqiu/workspace/softlayer_cpi_job:/var/vcap/jobs/softlayer_cpi
+    privileged: true
+    links: [db,nats,powerdns]
+    depends_on: [db,nats,powerdns]
+    ports: ["25555:25555","25556:25556","25250:25250","25251:25251","443:443"]
+    environment:
+      NATS_USER: "nats"
+      NATS_ADDRESS: nats
+      NATS_PASSWORD: "nats"
+      DNS_ADDRESS: powerdns
+      POSTGRES_DB: db
+      POSTGRES_USER: "bosh"
+      POSTGRES_PASSWORD: "postgres"
+      HM_USER: "admin"
+      HM_PASSWORD: "admin"
+      BLOB_AGENT_USER: "agent"
+      BLOB_AGENT_PASSWORD: "agent"
+      BLOB_DIRECTOR_USER: "director"
+      BLOB_DIRECTOR_PASSWORD: "director"
+    env_file:
+      - ./monit.env
+
+  nats:
+    image: fissile-nats:65b20629a117066c96587ccb1669eb82f12b23f0
+    privileged: true
+    ports: ["4222:4222","9222:9222"]
+    environment:
+      NATS_PASSWORD: "nats"
+      NATS_USER: "nats"
+      NATS_HTTP_USER: "http_nats"
+      NATS_HTTP_PASSWORD: "http_nats"
+    env_file:
+      - ./monit.env
+
+  powerdns:
+    image: fissile-powerdns:49693a763c0049b233c5d4a86709571fc72a9d9f
+    privileged: true
+    links: [db]
+    depends_on: [db]
+    ports: ["8081:8081"]
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_PASSWORD: "postgres"
+      WEBSERVER_PASSWORD: "password"
+    env_file:
+      - ./monit.env

@@ -1,0 +1,20 @@
+properties:
+  dns:
+    db:
+      password: "postgres"
+  director:
+    db:
+      password: "postgres"
+  nats:
+    password: "nats"
+  hm:
+    director_account:
+      password: "admin"
+  blobstore:
+    director:
+      password: "admin"
+    agent:
+      password: "agent"
+  fissile:
+    monit:
+      password: "vcap"

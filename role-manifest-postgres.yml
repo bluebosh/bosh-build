@@ -1,0 +1,24 @@
+roles:
+- name: postgres-9.4
+  jobs:
+  - name: postgres-9.4
+    release_name: bosh
+  run:
+    scaling:
+      min: 1
+      max: 3
+    memory: 256
+    virtual-cpus: 4
+configuration:
+  variables:
+  - name: JOB_INDEX
+  - name: MONIT_PASSWORD
+  - name: MONIT_PORT
+  - name: MONIT_USER
+  - name: POSTGRES_PASSWORD
+  templates:
+    index: '((JOB_INDEX))'
+    properties.postgres.password: '"((POSTGRES_PASSWORD))"'
+    properties.fissile.monit.password: '"((MONIT_PASSWORD))"'
+    properties.fissile.monit.user: '"((MONIT_USER))"'
+    properties.fissile.monit.port: '"((MONIT_PORT))"'

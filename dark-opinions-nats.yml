@@ -1,0 +1,8 @@
+properties:
+  nats:
+    password: "nats"
+    http:
+      password: "http_nats"
+  fissile:
+    monit:
+      password: "vcap"

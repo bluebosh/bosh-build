@@ -1,0 +1,3 @@
+properties:
+    nats:
+      auth_timeout: 3

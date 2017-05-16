@@ -1,0 +1,37 @@
+roles:
+- name: nats
+  jobs:
+  - name: nats
+    release_name: bosh
+  run:
+    scaling:
+      min: 1
+      max: 3
+    memory: 256
+    virtual-cpus: 4
+    exposed-ports:
+    - name: nats
+      protocol: TCP
+      external: 4222
+      internal: 4222
+      public: true
+configuration:
+  variables:
+  - name: JOB_INDEX
+  - name: MONIT_PASSWORD
+  - name: MONIT_PORT
+  - name: MONIT_USER
+  - name: NATS_HTTP_PASSWORD
+  - name: NATS_HTTP_USER
+  - name: NATS_PASSWORD
+  - name: NATS_USER
+  templates:
+    index: '((JOB_INDEX))'
+    properties.fissile.monit.user: '""((MONIT_USER))'
+    properties.nats.user: '"((NATS_USER))"'
+    properties.nats.password: '"((NATS_PASSWORD))"'
+    properties.nats.http.password: '"((NATS_HTTP_PASSWORD))"'
+    properties.nats.http.user: '"((NATS_HTTP_USER))"'
+    properties.fissile.monit.password: '"((MONIT_PASSWORD))"'
+    properties.fissile.monit.user: '"((MONIT_USER))"'
+    properties.fissile.monit.port: '"((MONIT_PORT))"'

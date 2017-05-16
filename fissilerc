@@ -1,0 +1,30 @@
+# The Docker repository name used for images
+export FISSILE_REPOSITORY=fissile
+
+# This is a comma separated list of paths to the local repositories
+# of all the releases
+export FISSILE_RELEASE="releases/bosh"
+
+# Path to a role manifest
+export FISSILE_ROLE_MANIFEST="role-manifest.yml"
+
+# Path to a BOSH deployment manifest that contains light opinions
+export FISSILE_LIGHT_OPINIONS="opinions.yml"
+
+# Path to a BOSH deployment manifest that contains dark opinions
+export FISSILE_DARK_OPINIONS="dark-opinions.yml"
+
+# Path to a location where all fissile output is stored
+export FISSILE_WORK_DIR="output/fissile"
+
+# This is the location of the local BOSH cache
+# You shouldn't need to override this
+# This will be ~/.bosh/cache in vagrant
+export FISSILE_CACHE_DIR="${HOME}/.bosh/cache"
+
+# Those variables are used to create BOSH releases for nats
+export ROOT=$(pwd)
+
+export release_path=releases/bosh
+
+export release_name=bosh

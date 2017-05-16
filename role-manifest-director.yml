@@ -1,0 +1,54 @@
+roles:
+- name: director
+  jobs:
+  - name: director
+    release_name: bosh
+  - name: health_monitor
+    release_name: bosh
+  - name: blobstore
+    release_name: bosh
+  run:
+    scaling:
+      min: 1
+      max: 3
+    memory: 256
+    virtual-cpus: 4
+configuration:
+  variables:
+  - name: BLOB_AGENT_PASSWORD
+  - name: BLOB_AGENT_USER
+  - name: BLOB_DIRECTOR_PASSWORD
+  - name: BLOB_DIRECTOR_USER
+  - name: DNS_ADDRESS
+  - name: HM_PASSWORD
+  - name: HM_USER
+  - name: JOB_INDEX
+  - name: MONIT_PASSWORD
+  - name: MONIT_PORT
+  - name: MONIT_USER
+  - name: NATS_ADDRESS
+  - name: NATS_PASSWORD
+  - name: NATS_USER
+  - name: POSTGRES_DB
+  - name: POSTGRES_PASSWORD
+  - name: POSTGRES_USER
+  templates:
+    index: '((JOB_INDEX))'
+    properties.nats.user: '"((NATS_USER))"'
+    properties.nats.address: '"((NATS_ADDRESS))"'
+    properties.nats.password: '"((NATS_PASSWORD))"'
+    properties.dns.address: '"((DNS_ADDRESS))"'
+    properties.dns.db.host: '"((POSTGRES_DB))"'
+    properties.dns.db.password: '"((POSTGRES_PASSWORD))"'
+    properties.director.db.host: '"((POSTGRES_DB))"'
+    properties.director.db.user: '"((POSTGRES_USER))"'
+    properties.director.db.password: '"((POSTGRES_PASSWORD))"'
+    properties.hm.director_account.password: '"((HM_PASSWORD))"'
+    properties.hm.director_account.user: '"((HM_USER))"'
+    properties.blobstore.agent.password: '"((BLOB_AGENT_PASSWORD))"'
+    properties.blobstore.agent.user: '"((BLOB_AGENT_USER))"'
+    properties.blobstore.director.user: '"((BLOB_DIRECTOR_USER))"'
+    properties.blobstore.director.password: '"((BLOB_DIRECTOR_PASSWORD))"'
+    properties.fissile.monit.password: '"((MONIT_PASSWORD))"'
+    properties.fissile.monit.user: '"((MONIT_USER))"'
+    properties.fissile.monit.port: '"((MONIT_PORT))"'

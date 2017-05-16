@@ -1,0 +1,7 @@
+index: ((JOB_INDEX))
+properties.dns.db.password: '"((NATS_PASSWORD))"'
+properties.dns.webserver.password: ((WEBSERVER_PASSWORD))
+properties.postgres.password: '"((POSTGRES_PASSWORD))"'
+properties.fissile.monit.user: '""((MONIT_USER))'
+properties.fissile.monit.password: '"((MONIT_PASSWORD))"'
+properties.fissile.monit.port: '"((MONIT_PORT))"'

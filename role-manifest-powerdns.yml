@@ -1,0 +1,28 @@
+roles:
+- name: powerdns
+  jobs:
+  - name: powerdns
+    release_name: bosh
+  run:
+    scaling:
+      min: 1
+      max: 3
+    memory: 256
+    virtual-cpus: 4
+configuration:
+  variables:
+  - name: JOB_INDEX
+  - name: MONIT_PASSWORD
+  - name: MONIT_PORT
+  - name: MONIT_USER
+  - name: POSTGRES_DB
+  - name: POSTGRES_PASSWORD
+  - name: WEBSERVER_PASSWORD
+  templates:
+    index: '((JOB_INDEX))'
+    properties.dns.db.password: '"((POSTGRES_PASSWORD))"'
+    properties.dns.db.host: '"((POSTGRES_DB))"'
+    properties.dns.webserver.password: '((WEBSERVER_PASSWORD))'
+    properties.fissile.monit.password: '"((MONIT_PASSWORD))"'
+    properties.fissile.monit.user: '"((MONIT_USER))"'
+    properties.fissile.monit.port: '"((MONIT_PORT))"'

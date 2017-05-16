@@ -1,0 +1,9 @@
+properties:
+  dns:
+    db:
+      password: "postgres"
+    webserver:
+      password: "password"
+  fissile:
+    monit:
+      password: "vcap"

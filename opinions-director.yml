@@ -1,0 +1,7 @@
+properties:
+  director:
+    cpi_job: softlayer_cpi
+    address: 127.0.0.1
+    name: bosh
+  blobstore:
+    address: 127.0.0.1

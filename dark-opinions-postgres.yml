@@ -1,0 +1,6 @@
+properties:
+  postgres:
+    password: "postgres"
+  fissile:
+    monit:
+      password: "vcap"
