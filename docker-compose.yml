@@ -8,15 +8,25 @@ services:
     env_file:
       - ./monit.env
     ports: ["5432:5432"]
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
 
   director:
     image: fissile-director:9c27423ae0758a28aaea7e089cb87add2e08f169
     volumes:
        - /Users/jianqiu/workspace/softlayer_cpi_job:/var/vcap/jobs/softlayer_cpi
-    privileged: true
+       - /Users/jianqiu/workspace/bosh-build/softlayer_cpi.monitrc:/var/vcap/monit/softlayer_cpi.monitrc
     links: [db,nats,powerdns]
     depends_on: [db,nats,powerdns]
     ports: ["25555:25555","25556:25556","25250:25250","25251:25251","443:443"]
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
     environment:
       NATS_USER: "nats"
       NATS_ADDRESS: nats
@@ -36,8 +46,12 @@ services:
 
   nats:
     image: fissile-nats:65b20629a117066c96587ccb1669eb82f12b23f0
-    privileged: true
     ports: ["4222:4222","9222:9222"]
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
     environment:
       NATS_PASSWORD: "nats"
       NATS_USER: "nats"
@@ -48,7 +62,12 @@ services:
 
   powerdns:
     image: fissile-powerdns:49693a763c0049b233c5d4a86709571fc72a9d9f
-    privileged: true
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
     links: [db]
     depends_on: [db]
     ports: ["8081:8081"]
@@ -58,3 +77,8 @@ services:
       WEBSERVER_PASSWORD: "password"
     env_file:
       - ./monit.env
+    networks:
+      - webnet
+
+networks:
+  webnet:

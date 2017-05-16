@@ -1,5 +1,5 @@
 properties:
   dns:
-    address: 127.0.0.1
-    recursor: true
-    domain_name: microbosh
+    address: 0.0.0.0
+    local_address: 127.0.0.1
+    query_local_address: 127.0.0.1
